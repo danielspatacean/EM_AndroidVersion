@@ -37,7 +37,7 @@ import appmobile.employeemanagerapp.utils.GetFilterJSON;
 import appmobile.employeemanagerapp.utils.Validator;
 
 public class ListActivity extends AppCompatActivity {
-    String myJSON;
+    private String myJSON;
 
     private static final String TAG_RESULTS = "result";
     private static final String TAG_NAME = "name";
@@ -49,7 +49,6 @@ public class ListActivity extends AppCompatActivity {
 
     private AdapterView.OnItemClickListener myClickListener;
     private AdapterView.OnItemLongClickListener myLongClickListener;
-    private ArrayAdapter arrayAdapter;
 
     JSONArray peoples = null;
 
@@ -63,12 +62,10 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
 
-
         list = (ListView) findViewById(R.id.listView);
+
         editTextSearch = (EditText) findViewById(R.id.searchEditText);
         editTextSearch.setHint("Search here...");
-
-        list.setAdapter(arrayAdapter);
 
         editTextSearch.addTextChangedListener(new TextWatcher() {
 
@@ -83,26 +80,16 @@ public class ListActivity extends AppCompatActivity {
                     personList.clear();
                     list.setAdapter(null);
                     showList();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                catch (JSONException e){
+                } catch (InterruptedException | JSONException | ExecutionException e) {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { }
 
             @Override
             public void afterTextChanged(Editable arg0) {}
         });
-
-
-
-
 
         myClickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -133,16 +120,13 @@ public class ListActivity extends AppCompatActivity {
             }
         };
 
-
         list.setClickable(true);
         list.setOnItemClickListener(myClickListener);
         list.setOnItemLongClickListener(myLongClickListener);
 
         personList = new ArrayList<>();
         getDataAndShowList();
-
     }
-
 
     private void EditDialog(String nameS, String phoneS, String addressS) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -205,12 +189,9 @@ public class ListActivity extends AppCompatActivity {
         try {
             la.execute(oldName, oldPhone, newName, newPhone, newAddress).get();
             refreshList();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        catch (JSONException e){
+        } catch (JSONException e){
             e.printStackTrace();
         }
     }
@@ -279,9 +260,7 @@ public class ListActivity extends AppCompatActivity {
         try {
             g.execute().get();
             myJSON = g.getJSON();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -302,7 +281,7 @@ public class ListActivity extends AppCompatActivity {
                 String name = c.getString(TAG_PHONE);
                 String address = c.getString(TAG_ADDRESS);
 
-                HashMap<String, String> persons = new HashMap<String, String>();
+                HashMap<String, String> persons = new HashMap<>();
 
                 persons.put(TAG_NAME, id);
                 persons.put(TAG_PHONE, name);
@@ -316,7 +295,6 @@ public class ListActivity extends AppCompatActivity {
                     new String[]{TAG_NAME,TAG_PHONE, TAG_ADDRESS},
                     new int[]{R.id.name, R.id.phone, R.id.address}
             );
-
             list.setAdapter(adapter);
 
         } catch (JSONException e) {
@@ -336,7 +314,7 @@ public class ListActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        View view = (View) findViewById(R.id.listView);
+        View view = findViewById(R.id.listView);
         goBack(view);
     }
 
