@@ -29,10 +29,6 @@ import appmobile.employeemanagerapp.activities.UserProfile;
 import appmobile.employeemanagerapp.utils.Utils;
 import appmobile.employeemanagerapp.utils.Connection;
 
-/**
- * Created by DJ DANY on 12/1/2016.
- */
-
 public class LoginAsync extends AsyncTask<String, Void, String> {
 
     private Dialog loadingDialog;

@@ -1,9 +1,8 @@
 package appmobile.employeemanagerapp.utils;
 
 /**
- * Created by DJ DANY on 12/1/2016.
+ * The validator object.
  */
-
 
 public class Validator {
 

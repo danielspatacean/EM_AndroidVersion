@@ -5,11 +5,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.InetAddress;
-
 /**
- * Connection URLs.
+ * Connection URLs & helpers.
  */
 
 public class Connection {

@@ -1,10 +1,7 @@
 package appmobile.employeemanagerapp.activities;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -38,8 +35,8 @@ public class LoginActivity extends Activity {
             setContentView(R.layout.activity_login);
             editTextUserName = (EditText) findViewById(R.id.editTextUserName);
             editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-            editTextUserName.setHint("username");
-            editTextPassword.setHint("password");
+            editTextUserName.setHint(Utils.username);
+            editTextPassword.setHint(Utils.password);
         }
     }
     @Override
@@ -84,7 +81,6 @@ public class LoginActivity extends Activity {
         else{
             Connection.NoConnectionToast(this);
         }
-
     }
 
     private void login(final String username, String password) {
