@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -26,14 +25,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.DeleteAsync;
 import appmobile.employeemanagerapp.tasks.EditAsync;
-import appmobile.employeemanagerapp.utils.GetDataJSON;
-import appmobile.employeemanagerapp.utils.GetFilterJSON;
+import appmobile.employeemanagerapp.tasks.GetDataJSON;
+import appmobile.employeemanagerapp.tasks.GetFilterJSON;
 import appmobile.employeemanagerapp.utils.Validator;
 
 public class ListActivity extends AppCompatActivity {

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import appmobile.employeemanagerapp.activities.ListActivity;
+import appmobile.employeemanagerapp.utils.Connection;
 
 public class DeleteAsync extends AsyncTask<String, Void, String> {
     private Dialog loadingDialog;
@@ -49,8 +50,7 @@ public class DeleteAsync extends AsyncTask<String, Void, String> {
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(
-                    "http://192.168.1.4/android/delete.php");
+            HttpPost httpPost = new HttpPost(Connection.DeleteURL);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = httpClient.execute(httpPost);

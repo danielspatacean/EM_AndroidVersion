@@ -26,7 +26,8 @@ import java.util.List;
 
 import appmobile.employeemanagerapp.activities.LoginActivity;
 import appmobile.employeemanagerapp.activities.UserProfile;
-import appmobile.employeemanagerapp.activities.Utils;
+import appmobile.employeemanagerapp.utils.Utils;
+import appmobile.employeemanagerapp.utils.Connection;
 
 /**
  * Created by DJ DANY on 12/1/2016.
@@ -60,8 +61,7 @@ public class LoginAsync extends AsyncTask<String, Void, String> {
 
         try{
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(
-                    "http://192.168.1.4/android/login.php");
+            HttpPost httpPost = new HttpPost(Connection.LoginURL);
 
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

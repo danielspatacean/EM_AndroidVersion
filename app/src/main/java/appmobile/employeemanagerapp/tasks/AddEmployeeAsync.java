@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -14,13 +13,13 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import appmobile.employeemanagerapp.activities.AddPersonActivity;
 import appmobile.employeemanagerapp.R;
+import appmobile.employeemanagerapp.utils.Connection;
 
 public class AddEmployeeAsync extends AsyncTask<String, Void, String> {
     private AddPersonActivity apa;
@@ -42,8 +41,7 @@ public class AddEmployeeAsync extends AsyncTask<String, Void, String> {
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(
-                    "http://192.168.1.4/android/insert.php");
+            HttpPost httpPost = new HttpPost(Connection.InsertURL);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = httpClient.execute(httpPost);

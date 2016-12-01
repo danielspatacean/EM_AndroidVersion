@@ -1,39 +1,57 @@
-package appmobile.employeemanagerapp.utils;
+package appmobile.employeemanagerapp.tasks;
 
 import android.os.AsyncTask;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import appmobile.employeemanagerapp.activities.ListActivity;
+import appmobile.employeemanagerapp.utils.Connection;
 
-public class GetDataJSON extends AsyncTask<String, Void, String> {
+
+public class GetFilterJSON extends AsyncTask<String, Void, String> {
     public String myJSON;
     public ListActivity la;
+    public String text;
 
-    public GetDataJSON(ListActivity listActivity) {
+    public GetFilterJSON(ListActivity listActivity) {
         this.la = listActivity;
+    }
+
+    public void setText(CharSequence text){
+        this.text = text.toString();
     }
 
     @Override
     protected String doInBackground(String... params) {
-        DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-        HttpPost httppost = new HttpPost("http://192.168.1.4/android/fetch.php");
+
 
         // Depends on your web service
-        httppost.setHeader("Content-type", "application/json");
+        //httppost.setHeader("Content-type", "application/json");
+        List<NameValuePair> nameValuePairs = new ArrayList<>();
+        nameValuePairs.add(new BasicNameValuePair("text", text));
 
         InputStream inputStream = null;
         String result = null;
         try {
-            HttpResponse response = httpclient.execute(httppost);
+            DefaultHttpClient httpclient = new DefaultHttpClient();
+            HttpPost httpPpost = new HttpPost(Connection.GetFilteredDataURL);
+
+            httpPpost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            HttpResponse response = httpclient.execute(httpPpost);
             HttpEntity entity = response.getEntity();
 
             inputStream = entity.getContent();
@@ -53,7 +71,7 @@ public class GetDataJSON extends AsyncTask<String, Void, String> {
         finally {
             try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
         }
-        setJsonResult(result);
+        myJSON = result;
         return result;
     }
 

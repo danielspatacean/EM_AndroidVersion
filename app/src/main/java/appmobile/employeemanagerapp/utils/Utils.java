@@ -1,4 +1,4 @@
-package appmobile.employeemanagerapp.activities;
+package appmobile.employeemanagerapp.utils;
 
 /**
  * Created by DJ DANY on 12/1/2016.
@@ -6,7 +6,6 @@ package appmobile.employeemanagerapp.activities;
 
 public class Utils {
     public static String result = "";
-    public static String EMPTY ="";
     public static boolean LOGGED = false;
     public static String AppDetails = ("You can view all the employees from your company \n\n"+
                                         "Add new employees \n\n"+
@@ -14,6 +13,7 @@ public class Utils {
                                         "Delete employees\n\n"+
                                         "Search employees\n\n"
     );
+
     public static void Login(){
         LOGGED = true;
     }

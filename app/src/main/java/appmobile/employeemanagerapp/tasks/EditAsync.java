@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import appmobile.employeemanagerapp.activities.ListActivity;
-import appmobile.employeemanagerapp.activities.Utils;
+import appmobile.employeemanagerapp.utils.Utils;
+import appmobile.employeemanagerapp.utils.Connection;
 
 public class EditAsync extends AsyncTask<String, Void, String> {
 
@@ -61,8 +62,8 @@ public class EditAsync extends AsyncTask<String, Void, String> {
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(
-                    "http://192.168.1.4/android/edit.php");
+            HttpPost httpPost = new HttpPost(Connection.EditURL);
+
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             HttpResponse response = httpClient.execute(httpPost);

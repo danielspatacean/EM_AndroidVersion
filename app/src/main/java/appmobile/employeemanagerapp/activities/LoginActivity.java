@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.LoginAsync;
+import appmobile.employeemanagerapp.utils.Utils;
 import appmobile.employeemanagerapp.utils.Validator;
 
 public class LoginActivity extends Activity {
