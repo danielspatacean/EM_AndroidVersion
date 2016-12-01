@@ -23,8 +23,6 @@ public class AddPersonActivity extends AppCompatActivity {
     private EditText editTExtAddress;
     private Validator validator;
 
-    private final String EMPTY = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +65,6 @@ public class AddPersonActivity extends AppCompatActivity {
         }
     }
 
-
     public void insertToDatabase(String name, String phone, String address){
         AddEmployeeAsync sendPostReqAsyncTask = new AddEmployeeAsync(this);
         sendPostReqAsyncTask.execute(name, phone, address);
@@ -96,9 +93,7 @@ public class AddPersonActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        View view = (View) findViewById(R.id.listView);
+        View view = findViewById(R.id.listView);
         goBackToUserPofile(view);
     }
-
 }
-
