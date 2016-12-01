@@ -20,6 +20,7 @@ import java.util.List;
 import appmobile.employeemanagerapp.activities.AddPersonActivity;
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.utils.Connection;
+import appmobile.employeemanagerapp.utils.Utils;
 
 public class AddEmployeeAsync extends AsyncTask<String, Void, String> {
     private AddPersonActivity apa;
@@ -35,9 +36,9 @@ public class AddEmployeeAsync extends AsyncTask<String, Void, String> {
         String paramAddress = params[2];
 
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair("name", paramUsername));
-        nameValuePairs.add(new BasicNameValuePair("phone", paramPhone));
-        nameValuePairs.add(new BasicNameValuePair("address", paramAddress));
+        nameValuePairs.add(new BasicNameValuePair(Utils.name, paramUsername));
+        nameValuePairs.add(new BasicNameValuePair(Utils.phone, paramPhone));
+        nameValuePairs.add(new BasicNameValuePair(Utils.address, paramAddress));
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
@@ -65,7 +66,7 @@ public class AddEmployeeAsync extends AsyncTask<String, Void, String> {
         Toast.makeText(apa.getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
         TextView textViewResult = (TextView) apa.findViewById(R.id.textViewResult);
-        textViewResult.setText("User inserted!");
+        textViewResult.setText(Utils.InsertedMessage);
         textViewResult.setTextColor(Color.BLUE);
     }
 }

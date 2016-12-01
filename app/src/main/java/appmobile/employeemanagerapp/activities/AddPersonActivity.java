@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.AddEmployeeAsync;
+import appmobile.employeemanagerapp.utils.Connection;
+import appmobile.employeemanagerapp.utils.Utils;
 import appmobile.employeemanagerapp.utils.Validator;
 
 public class AddPersonActivity extends AppCompatActivity {
@@ -50,16 +52,21 @@ public class AddPersonActivity extends AppCompatActivity {
         switch (validator.ValidateNewEmployee(name, phone, address)){
             case EMPTY_FIELD:
                 textViewResult = (TextView) findViewById(R.id.textViewResult);
-                textViewResult.setText("Please fill all the fields");
+                textViewResult.setText(Utils.EmptyFields);
                 textViewResult.setTextColor(Color.RED);
                 break;
             case INVALID_PHONE:
                 textViewResult = (TextView) findViewById(R.id.textViewResult);
-                textViewResult.setText("Incorrect phone number");
+                textViewResult.setText(Utils.IncorrectPhoneNr);
                 textViewResult.setTextColor(Color.RED);
                 break;
             case OK:
-                insertToDatabase(name, phone, address);
+                if (Connection.isNetworkAvailable(this)) {
+                    insertToDatabase(name, phone, address);
+                }
+                else{
+                    Connection.NoConnectionToast(AddPersonActivity.this);
+                }
                 break;
             default:
         }
@@ -71,8 +78,13 @@ public class AddPersonActivity extends AppCompatActivity {
     }
 
     public void viewPersons(View view) {
-        Intent intent = new Intent(AddPersonActivity.this, ListActivity.class);
-        startActivity(intent);
+        if (Connection.isNetworkAvailable(this)) {
+            Intent intent = new Intent(AddPersonActivity.this, ListActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Connection.NoConnectionToast(this);
+        }
     }
 
     public void goBackToUserPofile(View view) {

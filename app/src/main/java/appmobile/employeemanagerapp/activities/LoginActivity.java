@@ -1,7 +1,10 @@
 package appmobile.employeemanagerapp.activities;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -10,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.LoginAsync;
+import appmobile.employeemanagerapp.utils.Connection;
 import appmobile.employeemanagerapp.utils.Utils;
 import appmobile.employeemanagerapp.utils.Validator;
 
@@ -55,23 +59,30 @@ public class LoginActivity extends Activity {
         finish();
     }
 
+
     public void invokeLogin(View view){
-        username = editTextUserName.getText().toString();
-        password = editTextPassword.getText().toString();
         TextView textViewResult;
-        switch (validator.ValidateUsernameAndPassword(username, password)){
-            case EMPTY_FIELD:
-                textViewResult = (TextView) findViewById(R.id.textViewErrors);
-                textViewResult.setText("Please fill username and password");
-                textViewResult.setTextColor(Color.RED);
-                break;
-            case OK:
-                textViewResult = (TextView) findViewById(R.id.textViewErrors);
-                textViewResult.setText("");
-                textViewResult.clearComposingText();
-                login(username,password);
-                break;
-            default:
+        if (Connection.isNetworkAvailable(this)) {
+            username = editTextUserName.getText().toString();
+            password = editTextPassword.getText().toString();
+
+            switch (validator.ValidateUsernameAndPassword(username, password)) {
+                case EMPTY_FIELD:
+                    textViewResult = (TextView) findViewById(R.id.textViewErrors);
+                    textViewResult.setText(Utils.EmptyLoginFields);
+                    textViewResult.setTextColor(Color.RED);
+                    break;
+                case OK:
+                    textViewResult = (TextView) findViewById(R.id.textViewErrors);
+                    textViewResult.setText("");
+                    textViewResult.clearComposingText();
+                    login(username, password);
+                    break;
+                default:
+            }
+        }
+        else{
+            Connection.NoConnectionToast(this);
         }
 
     }

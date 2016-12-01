@@ -25,6 +25,7 @@ import java.util.List;
 
 import appmobile.employeemanagerapp.activities.ListActivity;
 import appmobile.employeemanagerapp.utils.Connection;
+import appmobile.employeemanagerapp.utils.Utils;
 
 public class DeleteAsync extends AsyncTask<String, Void, String> {
     private Dialog loadingDialog;
@@ -44,9 +45,9 @@ public class DeleteAsync extends AsyncTask<String, Void, String> {
         String result;
 
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair("name", name));
-        nameValuePairs.add(new BasicNameValuePair("phone", phone));
-        nameValuePairs.add(new BasicNameValuePair("address", address));
+        nameValuePairs.add(new BasicNameValuePair(Utils.name, name));
+        nameValuePairs.add(new BasicNameValuePair(Utils.phone, phone));
+        nameValuePairs.add(new BasicNameValuePair(Utils.address, address));
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
@@ -74,26 +75,24 @@ public class DeleteAsync extends AsyncTask<String, Void, String> {
         } catch (IOException e) {
             return e.getMessage().toString();
         }
-        return "success";
+        return Utils.success;
 
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        loadingDialog = ProgressDialog.show(la, "Please wait", "Loading...");
+        loadingDialog = ProgressDialog.show(la, Utils.WaitMessage, Utils.LoadingMessage);
     }
 
     @Override
     protected void onPostExecute(String result) {
         String s = result.trim();
         loadingDialog.dismiss();
-        if(s.equalsIgnoreCase("success")){
-            Toast.makeText(la.getApplicationContext(), "User deleted!", Toast.LENGTH_LONG).show();
-            la.finish();
-            la.startActivity(la.getIntent());
+        if(s.equalsIgnoreCase(Utils.success)){
+            Toast.makeText(la.getApplicationContext(), Utils.DeletedMessage, Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(la.getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(la.getApplicationContext(), Utils.WrongErrorMessage, Toast.LENGTH_LONG).show();
         }
     }
 }

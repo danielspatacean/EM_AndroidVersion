@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import appmobile.employeemanagerapp.R;
+import appmobile.employeemanagerapp.utils.Connection;
 import appmobile.employeemanagerapp.utils.Utils;
 
 public class UserProfile extends AppCompatActivity {
@@ -56,21 +57,36 @@ public class UserProfile extends AppCompatActivity {
     }
 
     public void viewPersons(View view) {
-        Intent intent = new Intent(UserProfile.this, ListActivity.class);
-        startActivity(intent);
-        finish();
+        if (Connection.isNetworkAvailable(this)) {
+            Intent intent = new Intent(UserProfile.this, ListActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Connection.NoConnectionToast(this);
+        }
     }
 
     public void addPerson(View view) {
-        Intent intent = new Intent(UserProfile.this, AddPersonActivity.class);
-        startActivity(intent);
-        finish();
+        if (Connection.isNetworkAvailable(this)) {
+            Intent intent = new Intent(UserProfile.this, AddPersonActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Connection.NoConnectionToast(this);
+        }
     }
 
     public void logOut(View view) {
-        Utils.Logout();
-        Intent intent = new Intent(UserProfile.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        if (Connection.isNetworkAvailable(this)) {
+            Utils.Logout();
+            Intent intent = new Intent(UserProfile.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Connection.NoConnectionToast(this);
+        }
     }
 }

@@ -51,14 +51,14 @@ public class EditAsync extends AsyncTask<String, Void, String> {
         String newAddress = params[4];
 
 
-        InputStream is = null;
+        InputStream is;
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair("oldName", oldName));
-        nameValuePairs.add(new BasicNameValuePair("oldPhone", oldPhone));
-        nameValuePairs.add(new BasicNameValuePair("newName", newName));
-        nameValuePairs.add(new BasicNameValuePair("newPhone", newPhone));
-        nameValuePairs.add(new BasicNameValuePair("newAddress", newAddress));
-        String result = null;
+        nameValuePairs.add(new BasicNameValuePair(Utils.oldName, oldName));
+        nameValuePairs.add(new BasicNameValuePair(Utils.oldPhone, oldPhone));
+        nameValuePairs.add(new BasicNameValuePair(Utils.newName, newName));
+        nameValuePairs.add(new BasicNameValuePair(Utils.newPhone, newPhone));
+        nameValuePairs.add(new BasicNameValuePair(Utils.newAddress, newAddress));
+        String result;
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
@@ -87,18 +87,17 @@ public class EditAsync extends AsyncTask<String, Void, String> {
         } catch (IOException e) {
             return e.getMessage().toString();
         }
-        return "success";
+        return Utils.success;
     }
 
     @Override
     protected void onPostExecute(String result) {
         String s = result.trim();
         loadingDialog.dismiss();
-        if(s.equalsIgnoreCase("success")){
-            Utils.result = "success";
-            Toast.makeText(la.getApplicationContext(), "User edited!", Toast.LENGTH_LONG).show();
+        if(s.equalsIgnoreCase(Utils.success)){
+            Toast.makeText(la.getApplicationContext(), Utils.EditedMessage, Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(la.getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+            Toast.makeText(la.getApplicationContext(), Utils.WrongErrorMessage, Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -55,8 +55,8 @@ public class LoginAsync extends AsyncTask<String, Void, String> {
 
         InputStream is = null;
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair("username", uname));
-        nameValuePairs.add(new BasicNameValuePair("password", pass));
+        nameValuePairs.add(new BasicNameValuePair(Utils.username, uname));
+        nameValuePairs.add(new BasicNameValuePair(Utils.password, pass));
         String result = null;
 
         try{
@@ -94,13 +94,13 @@ public class LoginAsync extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result){
         String s = result.trim();
         loadingDialog.dismiss();
-        if(s.equalsIgnoreCase("success")){
+        if(s.equalsIgnoreCase(Utils.success)){
             Utils.Login();
             Intent intent = new Intent(la, UserProfile.class);
             la.finish();
             la.startActivity(intent);
         }else {
-            Toast.makeText(la.getApplicationContext(), "Invalid User Name or Password", Toast.LENGTH_LONG).show();
+            Toast.makeText(la.getApplicationContext(), Utils.InvalidCredentialsMessage, Toast.LENGTH_LONG).show();
         }
     }
 }

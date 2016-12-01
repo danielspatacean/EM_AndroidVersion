@@ -32,6 +32,7 @@ import appmobile.employeemanagerapp.tasks.DeleteAsync;
 import appmobile.employeemanagerapp.tasks.EditAsync;
 import appmobile.employeemanagerapp.tasks.GetDataJSON;
 import appmobile.employeemanagerapp.tasks.GetFilterJSON;
+import appmobile.employeemanagerapp.utils.Connection;
 import appmobile.employeemanagerapp.utils.Validator;
 
 public class ListActivity extends AppCompatActivity {
@@ -70,16 +71,21 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                 // When user changed the Text
-                GetFilterJSON g = new GetFilterJSON(ListActivity.this);
-                g.setText(cs);
-                try {
-                    g.execute().get();
-                    myJSON = g.getJSON();
-                    personList.clear();
-                    list.setAdapter(null);
-                    showList();
-                } catch (InterruptedException | JSONException | ExecutionException e) {
-                    e.printStackTrace();
+                if (Connection.isNetworkAvailable(ListActivity.this)) {
+                    GetFilterJSON g = new GetFilterJSON(ListActivity.this);
+                    g.setText(cs);
+                    try {
+                        g.execute().get();
+                        myJSON = g.getJSON();
+                        personList.clear();
+                        list.setAdapter(null);
+                        showList();
+                    } catch (InterruptedException | JSONException | ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    Connection.NoConnectionToast(ListActivity.this);
                 }
             }
             @Override
@@ -155,6 +161,7 @@ public class ListActivity extends AppCompatActivity {
 
         alert.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+
                 String newName = nameBox.getText().toString();
                 String newPhone = phoneBox.getText().toString();
                 String newAddress = addressBox.getText().toString();
@@ -167,7 +174,12 @@ public class ListActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Invalid phone number!", Toast.LENGTH_LONG).show();
                         break;
                     case OK:
-                        EditUser(oldName, oldPhone, newName, newPhone, newAddress);
+                        if (Connection.isNetworkAvailable(ListActivity.this)) {
+                            EditUser(oldName, oldPhone, newName, newPhone, newAddress);
+                        }
+                        else{
+                            Connection.NoConnectionToast(ListActivity.this);
+                        }
                         break;
                 }
 
@@ -179,6 +191,7 @@ public class ListActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
+
         alert.show();
     }
 
@@ -234,7 +247,12 @@ public class ListActivity extends AppCompatActivity {
                 String phone = phoneBox.getText().toString();
                 String address = addressBox.getText().toString();
 
-                DeleteUser(name, phone, address);
+                if (Connection.isNetworkAvailable(ListActivity.this)) {
+                    DeleteUser(name, phone, address);
+                }
+                else{
+                    Connection.NoConnectionToast(ListActivity.this);
+                }
             }
         });
 
@@ -248,7 +266,15 @@ public class ListActivity extends AppCompatActivity {
 
     private void DeleteUser(String name, String phone, String address) {
         DeleteAsync da = new DeleteAsync(this);
-        da.execute(name, phone, address);
+        try {
+            da.execute(name, phone, address).get();
+            refreshList();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
     }
 
 
