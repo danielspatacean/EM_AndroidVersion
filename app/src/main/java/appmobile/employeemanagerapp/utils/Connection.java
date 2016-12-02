@@ -10,13 +10,13 @@ import android.widget.Toast;
  */
 
 public class Connection {
-    public static final String InsertURL = "http://192.168.1.4/android/insert.php";
-    public static final String EditURL = "http://192.168.1.4/android/edit.php";
-    public static final String DeleteURL = "http://192.168.1.4/android/delete.php";
-
-    public static final String LoginURL = "http://192.168.1.4/android/login.php";
-    public static final String GetFilteredDataURL = "http://192.168.1.4/android/filter.php";
-    public static final String GetDataURL ="http://192.168.1.4/android/fetch.php";
+    public static final String ServerURL = "http://emserver.000webhostapp.com/";
+    public static final String InsertURL = ServerURL + "insert.php";
+    public static final String EditURL = ServerURL + "edit.php";
+    public static final String DeleteURL = ServerURL + "delete.php";
+    public static final String LoginURL = ServerURL + "login.php";
+    public static final String GetFilteredDataURL = ServerURL + "filter.php";
+    public static final String GetDataURL = ServerURL + "fetch.php";
 
     public static boolean isNetworkAvailable(final Context context) {
         final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
