@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.utils.AppState;
@@ -16,6 +15,7 @@ import appmobile.employeemanagerapp.utils.Connection;
 import appmobile.employeemanagerapp.utils.Constants;
 
 public class UserProfile extends ActionBarActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +40,7 @@ public class UserProfile extends ActionBarActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(UserProfile.this, LoginActivity.class);
-        finish();
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
+        Toast.makeText(getApplicationContext(),Constants.LogOutMessage, Toast.LENGTH_LONG).show();
     }
 
     public void viewPersons(View view) {
@@ -80,14 +66,9 @@ public class UserProfile extends ActionBarActivity {
     }
 
     public void logOut(View view) {
-        if (Connection.isNetworkAvailable(this)) {
-            AppState.Logout();
-            Intent intent = new Intent(UserProfile.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        else{
-            Connection.NoConnectionToast(this);
-        }
+        AppState.Logout();
+        Intent intent = new Intent(UserProfile.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

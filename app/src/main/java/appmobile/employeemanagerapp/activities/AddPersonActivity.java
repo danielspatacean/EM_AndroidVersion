@@ -1,18 +1,13 @@
 package appmobile.employeemanagerapp.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.AddEmployeeAsync;
 import appmobile.employeemanagerapp.utils.Connection;
@@ -37,18 +32,10 @@ public class AddPersonActivity extends ActionBarActivity {
         editTExtAddress = (EditText) findViewById(R.id.editTextAddress);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
     public void insert(View view){
         String name = editTextName.getText().toString();
         String phone = editTextPhone.getText().toString();
         String address = editTExtAddress.getText().toString();
-
-        TextView textViewResult;
 
         switch (validator.ValidateNewEmployee(name, phone, address)){
             case EMPTY_FIELD:

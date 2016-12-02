@@ -40,4 +40,5 @@ public class Constants {
     public static final String CancelLabel = "Cancel";
     public static final String text = "text";
     public static final String EmployeeAddedMessage = "Employee added";
+    public static final String LogOutMessage = "Please logout first";
 }

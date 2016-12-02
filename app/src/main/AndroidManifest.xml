@@ -14,7 +14,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Employee Manager - V1.0"
+        android:label="Employee Manager - V1.2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.LoginActivity" >

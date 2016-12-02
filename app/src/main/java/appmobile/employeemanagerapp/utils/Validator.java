@@ -16,7 +16,7 @@ public class Validator {
         return ErrorCodes.EMPTY_FIELD.OK;
     }
 
-    public static boolean isNumeric(String strNum) {
+    private static boolean isNumeric(String strNum) {
         boolean ret = true;
         try {
 

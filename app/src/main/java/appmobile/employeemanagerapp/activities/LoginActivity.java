@@ -1,13 +1,11 @@
 package appmobile.employeemanagerapp.activities;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import appmobile.employeemanagerapp.R;
@@ -59,7 +57,6 @@ public class LoginActivity extends Activity {
         finish();
     }
 
-
     public void invokeLogin(View view){
         if (Connection.isNetworkAvailable(this)) {
             username = editTextUserName.getText().toString();
@@ -87,7 +84,6 @@ public class LoginActivity extends Activity {
 
     public void exit(View view) {
         finish();
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
+        super.onBackPressed();
     }
 }

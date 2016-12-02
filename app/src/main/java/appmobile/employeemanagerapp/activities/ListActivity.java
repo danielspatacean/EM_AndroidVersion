@@ -14,9 +14,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -259,7 +256,6 @@ public class ListActivity extends ActionBarActivity {
         addressBox.setClickable(false);
         layout.addView(addressBox);
 
-
         alert.setView(layout);
 
         alert.setPositiveButton(Constants.DeleteLabel, new DialogInterface.OnClickListener() {
@@ -298,8 +294,6 @@ public class ListActivity extends ActionBarActivity {
 
     }
 
-
-
     public void getDataAndShowList() {
         GetDataJSON g = new GetDataJSON(this);
         try {
@@ -315,6 +309,7 @@ public class ListActivity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
+
     private void showList() throws JSONException {
         try {
             JSONObject jsonObj = new JSONObject(myJSON);
@@ -347,6 +342,7 @@ public class ListActivity extends ActionBarActivity {
         }
 
     }
+
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
                 && keyCode == KeyEvent.KEYCODE_BACK
@@ -357,6 +353,7 @@ public class ListActivity extends ActionBarActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     public void onBackPressed() {
         View view = findViewById(R.id.listView);
@@ -368,6 +365,4 @@ public class ListActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
     }
-
-
 }
