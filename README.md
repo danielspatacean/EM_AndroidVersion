@@ -17,7 +17,7 @@ DB: MySQL
 
 *** Password: test
 
-*** HowTo:
+# HowTo:
 
 First step (mandatory): Login
 
