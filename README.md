@@ -34,4 +34,7 @@ Delete employee:
 tap 'Employees', long tap on an employee, tap on 'Delete'
 
 Search employee:
-tap 'Employee', enter search values in 'Search here...' field.
+tap 'Employees', enter search values in 'Search here...' field.
+
+Call employee:
+tap 'Employees', tap on an employee, tap on 'Call employee'
