@@ -26,7 +26,8 @@ import java.util.List;
 
 import appmobile.employeemanagerapp.activities.LoginActivity;
 import appmobile.employeemanagerapp.activities.UserProfile;
-import appmobile.employeemanagerapp.utils.Utils;
+import appmobile.employeemanagerapp.utils.AppState;
+import appmobile.employeemanagerapp.utils.Constants;
 import appmobile.employeemanagerapp.utils.Connection;
 
 public class LoginAsync extends AsyncTask<String, Void, String> {
@@ -51,8 +52,8 @@ public class LoginAsync extends AsyncTask<String, Void, String> {
 
         InputStream is = null;
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(Utils.username, uname));
-        nameValuePairs.add(new BasicNameValuePair(Utils.password, pass));
+        nameValuePairs.add(new BasicNameValuePair(Constants.username, uname));
+        nameValuePairs.add(new BasicNameValuePair(Constants.password, pass));
         String result = null;
 
         try{
@@ -90,13 +91,13 @@ public class LoginAsync extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result){
         String s = result.trim();
         loadingDialog.dismiss();
-        if(s.equalsIgnoreCase(Utils.success)){
-            Utils.Login();
+        if(s.equalsIgnoreCase(Constants.success)){
+            AppState.Login();
             Intent intent = new Intent(la, UserProfile.class);
             la.finish();
             la.startActivity(intent);
         }else {
-            Toast.makeText(la.getApplicationContext(), Utils.InvalidCredentialsMessage, Toast.LENGTH_LONG).show();
+            Toast.makeText(la.getApplicationContext(), Constants.InvalidCredentialsMessage, Toast.LENGTH_LONG).show();
         }
     }
 }

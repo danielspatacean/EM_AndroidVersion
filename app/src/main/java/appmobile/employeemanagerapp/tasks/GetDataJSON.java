@@ -1,5 +1,7 @@
 package appmobile.employeemanagerapp.tasks;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpEntity;
@@ -14,10 +16,12 @@ import java.io.InputStreamReader;
 
 import appmobile.employeemanagerapp.activities.ListActivity;
 import appmobile.employeemanagerapp.utils.Connection;
+import appmobile.employeemanagerapp.utils.Constants;
 
 public class GetDataJSON extends AsyncTask<String, Void, String> {
     public String myJSON;
     public ListActivity la;
+    private Dialog loadingDialog;
 
     public GetDataJSON(ListActivity listActivity) {
         this.la = listActivity;
@@ -49,7 +53,7 @@ public class GetDataJSON extends AsyncTask<String, Void, String> {
             }
             result = sb.toString();
         } catch (Exception e) {
-            // Oops
+            e.printStackTrace();
         }
         finally {
             try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
@@ -59,8 +63,15 @@ public class GetDataJSON extends AsyncTask<String, Void, String> {
     }
 
     @Override
+    protected void onPreExecute(){
+        super.onPreExecute();
+        loadingDialog = ProgressDialog.show(la, Constants.WaitMessage, Constants.LoadingMessage);
+    }
+    @Override
     protected void onPostExecute(String result){
         setJsonResult(result);
+        loadingDialog.dismiss();
+        super.onPostExecute(result);
     }
     public String getJSON(){
         return myJSON;

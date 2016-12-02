@@ -2,7 +2,7 @@ package appmobile.employeemanagerapp.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -10,15 +10,16 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.AddEmployeeAsync;
 import appmobile.employeemanagerapp.utils.Connection;
-import appmobile.employeemanagerapp.utils.Utils;
+import appmobile.employeemanagerapp.utils.Constants;
 import appmobile.employeemanagerapp.utils.Validator;
 
-public class AddPersonActivity extends AppCompatActivity {
+public class AddPersonActivity extends ActionBarActivity {
 
     private EditText editTextName;
     private EditText editTextPhone;
@@ -51,14 +52,10 @@ public class AddPersonActivity extends AppCompatActivity {
 
         switch (validator.ValidateNewEmployee(name, phone, address)){
             case EMPTY_FIELD:
-                textViewResult = (TextView) findViewById(R.id.textViewResult);
-                textViewResult.setText(Utils.EmptyFields);
-                textViewResult.setTextColor(Color.RED);
+                Toast.makeText(getApplicationContext(), Constants.EmptyFields, Toast.LENGTH_LONG).show();
                 break;
             case INVALID_PHONE:
-                textViewResult = (TextView) findViewById(R.id.textViewResult);
-                textViewResult.setText(Utils.IncorrectPhoneNr);
-                textViewResult.setTextColor(Color.RED);
+                Toast.makeText(getApplicationContext(), Constants.IncorrectPhoneNr, Toast.LENGTH_LONG).show();
                 break;
             case OK:
                 if (Connection.isNetworkAvailable(this)) {

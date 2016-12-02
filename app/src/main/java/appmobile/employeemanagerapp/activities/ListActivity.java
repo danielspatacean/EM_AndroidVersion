@@ -1,16 +1,22 @@
 package appmobile.employeemanagerapp.activities;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -25,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import appmobile.employeemanagerapp.R;
@@ -33,9 +40,10 @@ import appmobile.employeemanagerapp.tasks.EditAsync;
 import appmobile.employeemanagerapp.tasks.GetDataJSON;
 import appmobile.employeemanagerapp.tasks.GetFilterJSON;
 import appmobile.employeemanagerapp.utils.Connection;
+import appmobile.employeemanagerapp.utils.Constants;
 import appmobile.employeemanagerapp.utils.Validator;
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends ActionBarActivity {
     private String myJSON;
 
     private static final String TAG_RESULTS = "result";
@@ -64,7 +72,9 @@ public class ListActivity extends AppCompatActivity {
         list = (ListView) findViewById(R.id.listView);
 
         editTextSearch = (EditText) findViewById(R.id.searchEditText);
-        editTextSearch.setHint("Search here...");
+        editTextSearch.setHint(Constants.SearchHint);
+
+        editTextSearch.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
 
         editTextSearch.addTextChangedListener(new TextWatcher() {
 
@@ -134,7 +144,8 @@ public class ListActivity extends AppCompatActivity {
 
     private void EditDialog(String nameS, String phoneS, String addressS) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Edit user");
+        alert.setTitle(Constants.EmployeeInfoLabel);
+        final List<EditText> dialogWidgets = new ArrayList<>();
 
         final String oldName = nameS;
         final String oldPhone = phoneS;
@@ -145,21 +156,20 @@ public class ListActivity extends AppCompatActivity {
         final EditText nameBox = new EditText(this);
         nameBox.setText(nameS);
         layout.addView(nameBox);
+        dialogWidgets.add(nameBox);
 
         final EditText phoneBox = new EditText(this);
         phoneBox.setText(phoneS);
         layout.addView(phoneBox);
+        dialogWidgets.add(phoneBox);
 
         final EditText addressBox = new EditText(this);
         addressBox.setText(addressS);
         layout.addView(addressBox);
-
-        final TextView textViewError = new TextView(this);
-        layout.addView(textViewError);
-
+        dialogWidgets.add(addressBox);
         alert.setView(layout);
 
-        alert.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(Constants.EditLabel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
                 String newName = nameBox.getText().toString();
@@ -168,10 +178,10 @@ public class ListActivity extends AppCompatActivity {
 
                 switch (validator.ValidateNewEmployee(newName, newPhone, newAddress)){
                     case EMPTY_FIELD:
-                        Toast.makeText(getApplicationContext(), "Please complete all fields!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), Constants.EmptyFields, Toast.LENGTH_LONG).show();
                         break;
                     case INVALID_PHONE:
-                        Toast.makeText(getApplicationContext(), "Invalid phone number!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), Constants.IncorrectPhoneNr, Toast.LENGTH_LONG).show();
                         break;
                     case OK:
                         if (Connection.isNetworkAvailable(ListActivity.this)) {
@@ -186,9 +196,20 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(Constants.CancelLabel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.cancel();
+
+            }
+        });
+
+        alert.setNeutralButton(Constants.CallEmployeeLabel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+
+                intent.setData(Uri.parse("tel:" + oldPhone));
+                startActivity(intent);
             }
         });
 
@@ -216,7 +237,7 @@ public class ListActivity extends AppCompatActivity {
     private void DeleteDialog(String name, String phone, String address) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Delete user?");
+        alert.setTitle(Constants.DeleteEmployeeLabel);
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -241,7 +262,7 @@ public class ListActivity extends AppCompatActivity {
 
         alert.setView(layout);
 
-        alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(Constants.DeleteLabel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String name = nameBox.getText().toString();
                 String phone = phoneBox.getText().toString();
@@ -256,7 +277,7 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(Constants.CancelLabel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.cancel();
             }

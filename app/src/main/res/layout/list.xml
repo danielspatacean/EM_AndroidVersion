@@ -6,30 +6,26 @@
     android:orientation="vertical"
     tools:context=".activities.ListActivity">
 
-
     <ListView
         android:layout_above="@+id/button1"
         android:layout_width="match_parent"
-        android:layout_height="1480px"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:id="@+id/listView"
         android:paddingBottom="100px"
         />
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:id="@+id/searchEditText"
-        android:layout_width="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_marginBottom="100px"
-        android:layout_height="wrap_content" />
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="goBack"
-        android:textSize="50px"
-        android:text="BACK" />
+        android:gravity="center"
+         />
+
+    </RelativeLayout>
 </RelativeLayout>

@@ -18,6 +18,7 @@ import java.util.List;
 
 import appmobile.employeemanagerapp.activities.ListActivity;
 import appmobile.employeemanagerapp.utils.Connection;
+import appmobile.employeemanagerapp.utils.Constants;
 
 
 public class GetFilterJSON extends AsyncTask<String, Void, String> {
@@ -40,7 +41,7 @@ public class GetFilterJSON extends AsyncTask<String, Void, String> {
         // Depends on your web service
         //httppost.setHeader("Content-type", "application/json");
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair("text", text));
+        nameValuePairs.add(new BasicNameValuePair(Constants.text, text));
 
         InputStream inputStream = null;
         String result = null;

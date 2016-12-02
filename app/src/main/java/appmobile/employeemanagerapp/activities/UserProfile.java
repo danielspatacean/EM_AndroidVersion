@@ -2,7 +2,7 @@ package appmobile.employeemanagerapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -11,20 +11,21 @@ import android.view.View;
 import android.widget.TextView;
 
 import appmobile.employeemanagerapp.R;
+import appmobile.employeemanagerapp.utils.AppState;
 import appmobile.employeemanagerapp.utils.Connection;
-import appmobile.employeemanagerapp.utils.Utils;
+import appmobile.employeemanagerapp.utils.Constants;
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfile extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userprofile);
 
         TextView textViewWelcome = (TextView) findViewById(R.id.textView3);
-        textViewWelcome.setText("Welcome to Employee Manager");
+        textViewWelcome.setText(Constants.WelcomeMessage);
 
         TextView textViewDetails = (TextView) findViewById(R.id.detailsTextView);
-        textViewDetails.setText(Utils.AppDetails);
+        textViewDetails.setText(Constants.AppDetails);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -80,7 +81,7 @@ public class UserProfile extends AppCompatActivity {
 
     public void logOut(View view) {
         if (Connection.isNetworkAvailable(this)) {
-            Utils.Logout();
+            AppState.Logout();
             Intent intent = new Intent(UserProfile.this, LoginActivity.class);
             startActivity(intent);
             finish();

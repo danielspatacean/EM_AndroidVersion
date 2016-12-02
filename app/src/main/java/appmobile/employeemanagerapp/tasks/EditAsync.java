@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import appmobile.employeemanagerapp.activities.ListActivity;
-import appmobile.employeemanagerapp.utils.Utils;
+import appmobile.employeemanagerapp.utils.Constants;
 import appmobile.employeemanagerapp.utils.Connection;
 
 public class EditAsync extends AsyncTask<String, Void, String> {
@@ -39,7 +39,7 @@ public class EditAsync extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        loadingDialog = ProgressDialog.show(la, "Please wait", "Loading...");
+        loadingDialog = ProgressDialog.show(la, Constants.WaitMessage, Constants.LoadingMessage);
     }
 
     @Override
@@ -53,12 +53,12 @@ public class EditAsync extends AsyncTask<String, Void, String> {
 
         InputStream is;
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(Utils.oldName, oldName));
-        nameValuePairs.add(new BasicNameValuePair(Utils.oldPhone, oldPhone));
-        nameValuePairs.add(new BasicNameValuePair(Utils.newName, newName));
-        nameValuePairs.add(new BasicNameValuePair(Utils.newPhone, newPhone));
-        nameValuePairs.add(new BasicNameValuePair(Utils.newAddress, newAddress));
-        String result;
+        nameValuePairs.add(new BasicNameValuePair(Constants.oldName, oldName));
+        nameValuePairs.add(new BasicNameValuePair(Constants.oldPhone, oldPhone));
+        nameValuePairs.add(new BasicNameValuePair(Constants.newName, newName));
+        nameValuePairs.add(new BasicNameValuePair(Constants.newPhone, newPhone));
+        nameValuePairs.add(new BasicNameValuePair(Constants.newAddress, newAddress));
+        String result = Constants.EMPTY;
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
@@ -73,13 +73,11 @@ public class EditAsync extends AsyncTask<String, Void, String> {
             is = entity.getContent();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
-            StringBuilder sb = new StringBuilder();
 
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                result += line;
             }
-            result = sb.toString();
         } catch (ClientProtocolException e) {
             return e.getMessage().toString();
         } catch (UnsupportedEncodingException e) {
@@ -87,17 +85,17 @@ public class EditAsync extends AsyncTask<String, Void, String> {
         } catch (IOException e) {
             return e.getMessage().toString();
         }
-        return Utils.success;
+        return result;
     }
 
     @Override
     protected void onPostExecute(String result) {
         String s = result.trim();
         loadingDialog.dismiss();
-        if(s.equalsIgnoreCase(Utils.success)){
-            Toast.makeText(la.getApplicationContext(), Utils.EditedMessage, Toast.LENGTH_LONG).show();
+        if(s.equalsIgnoreCase(Constants.success)){
+            Toast.makeText(la.getApplicationContext(), Constants.EditedMessage, Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(la.getApplicationContext(), Utils.WrongErrorMessage, Toast.LENGTH_LONG).show();
+            Toast.makeText(la.getApplicationContext(), Constants.WrongErrorMessage, Toast.LENGTH_LONG).show();
         }
     }
 }

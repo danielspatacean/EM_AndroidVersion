@@ -1,8 +1,5 @@
 package appmobile.employeemanagerapp.tasks;
-
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.widget.TextView;
 import android.widget.Toast;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,11 +13,9 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import appmobile.employeemanagerapp.activities.AddPersonActivity;
-import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.utils.Connection;
-import appmobile.employeemanagerapp.utils.Utils;
+import appmobile.employeemanagerapp.utils.Constants;
 
 public class AddEmployeeAsync extends AsyncTask<String, Void, String> {
     private AddPersonActivity apa;
@@ -36,9 +31,9 @@ public class AddEmployeeAsync extends AsyncTask<String, Void, String> {
         String paramAddress = params[2];
 
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(Utils.name, paramUsername));
-        nameValuePairs.add(new BasicNameValuePair(Utils.phone, paramPhone));
-        nameValuePairs.add(new BasicNameValuePair(Utils.address, paramAddress));
+        nameValuePairs.add(new BasicNameValuePair(Constants.name, paramUsername));
+        nameValuePairs.add(new BasicNameValuePair(Constants.phone, paramPhone));
+        nameValuePairs.add(new BasicNameValuePair(Constants.address, paramAddress));
 
         try {
             HttpClient httpClient = new DefaultHttpClient();
@@ -56,17 +51,17 @@ public class AddEmployeeAsync extends AsyncTask<String, Void, String> {
         catch (IOException e) {
             return e.getMessage();
         }
-        return "success";
+        return  Constants.success;
     }
 
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-
-        Toast.makeText(apa.getApplicationContext(), result, Toast.LENGTH_LONG).show();
-
-        TextView textViewResult = (TextView) apa.findViewById(R.id.textViewResult);
-        textViewResult.setText(Utils.InsertedMessage);
-        textViewResult.setTextColor(Color.BLUE);
+        if (result == Constants.success){
+            Toast.makeText(apa.getApplicationContext(), Constants.EmployeeAddedMessage, Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(apa.getApplicationContext(), Constants.WrongErrorMessage, Toast.LENGTH_LONG).show();
+        }
     }
 }

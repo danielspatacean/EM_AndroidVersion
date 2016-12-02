@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
-    useLibrary 'org.apache.http.legacy'
+    compileSdkVersion 21
+    buildToolsVersion '21.0.1'
+
     defaultConfig {
         applicationId "appmobile.employeemanagerapp"
-        minSdkVersion 23
-        targetSdkVersion 25
+        minSdkVersion 18
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -25,6 +25,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.0'
     testCompile 'junit:junit:4.12'
 }

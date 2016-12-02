@@ -8,10 +8,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.LoginAsync;
+import appmobile.employeemanagerapp.utils.AppState;
 import appmobile.employeemanagerapp.utils.Connection;
-import appmobile.employeemanagerapp.utils.Utils;
+import appmobile.employeemanagerapp.utils.Constants;
 import appmobile.employeemanagerapp.utils.Validator;
 
 public class LoginActivity extends Activity {
@@ -26,7 +29,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.validator = new Validator();
-        if (Utils.LOGGED){
+        if (AppState.LOGGED){
             Intent intent = new Intent(LoginActivity.this, UserProfile.class);
             finish();
             startActivity(intent);
@@ -35,8 +38,8 @@ public class LoginActivity extends Activity {
             setContentView(R.layout.activity_login);
             editTextUserName = (EditText) findViewById(R.id.editTextUserName);
             editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-            editTextUserName.setHint(Utils.username);
-            editTextPassword.setHint(Utils.password);
+            editTextUserName.setHint(Constants.username);
+            editTextPassword.setHint(Constants.password);
         }
     }
     @Override
@@ -58,21 +61,15 @@ public class LoginActivity extends Activity {
 
 
     public void invokeLogin(View view){
-        TextView textViewResult;
         if (Connection.isNetworkAvailable(this)) {
             username = editTextUserName.getText().toString();
             password = editTextPassword.getText().toString();
 
             switch (validator.ValidateUsernameAndPassword(username, password)) {
                 case EMPTY_FIELD:
-                    textViewResult = (TextView) findViewById(R.id.textViewErrors);
-                    textViewResult.setText(Utils.EmptyLoginFields);
-                    textViewResult.setTextColor(Color.RED);
+                    Toast.makeText(getApplicationContext(),Constants.EmptyLoginFields, Toast.LENGTH_LONG).show();
                     break;
                 case OK:
-                    textViewResult = (TextView) findViewById(R.id.textViewErrors);
-                    textViewResult.setText("");
-                    textViewResult.clearComposingText();
                     login(username, password);
                     break;
                 default:
@@ -89,6 +86,7 @@ public class LoginActivity extends Activity {
     }
 
     public void exit(View view) {
+        finish();
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
     }
