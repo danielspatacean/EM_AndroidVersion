@@ -9,3 +9,10 @@ Client: Android
 Server: PHP
 
 DB: MySQL
+
+
+*** Aplicatia se poate instala din folderul 'APK' si se poate testa folosind
+
+*** Username: test
+
+*** Password: test
