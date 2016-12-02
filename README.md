@@ -28,10 +28,10 @@ Add employee:
 tap on 'Add employee', enter name, phone and addres then tap on 'Add employee'
 
 Edit employee:
-tap 'Employees', tap on an employee.
+tap 'Employees', tap on an employee, modify values, tap on 'Edit'
 
 Delete employee:
-tap 'Employees', long tap on an employee.
+tap 'Employees', long tap on an employee, tap on 'Delete'
 
 Search employee:
 tap 'Employee', enter search values in 'Search here...' field.
