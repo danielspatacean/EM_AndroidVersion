@@ -9,12 +9,24 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import appmobile.employeemanagerapp.R;
+import appmobile.employeemanagerapp.tasks.AddEmployeeAsync;
 import appmobile.employeemanagerapp.utils.AppState;
 import appmobile.employeemanagerapp.utils.Connection;
 import appmobile.employeemanagerapp.utils.Constants;
+import appmobile.employeemanagerapp.utils.Local;
 
 public class UserProfile extends ActionBarActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +38,8 @@ public class UserProfile extends ActionBarActivity {
 
         TextView textViewDetails = (TextView) findViewById(R.id.detailsTextView);
         textViewDetails.setText(Constants.AppDetails);
+
+        Local.Initialize(this);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
@@ -44,14 +58,10 @@ public class UserProfile extends ActionBarActivity {
     }
 
     public void viewPersons(View view) {
-        if (Connection.isNetworkAvailable(this)) {
-            Intent intent = new Intent(UserProfile.this, ListActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        else{
-            Connection.NoConnectionToast(this);
-        }
+        Intent intent = new Intent(UserProfile.this, ListActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 
     public void addPerson(View view) {

@@ -38,6 +38,7 @@ import appmobile.employeemanagerapp.tasks.GetDataJSON;
 import appmobile.employeemanagerapp.tasks.GetFilterJSON;
 import appmobile.employeemanagerapp.utils.Connection;
 import appmobile.employeemanagerapp.utils.Constants;
+import appmobile.employeemanagerapp.utils.Local;
 import appmobile.employeemanagerapp.utils.Validator;
 
 public class ListActivity extends ActionBarActivity {
@@ -73,6 +74,12 @@ public class ListActivity extends ActionBarActivity {
 
         editTextSearch.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
 
+        if (Connection.isNetworkAvailable(this)){
+            Local.UpdateFromFileForEdit(this);
+            Local.UpdateFileForDelete(this);
+            Local.ClearFile();
+        }
+
         editTextSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -84,6 +91,7 @@ public class ListActivity extends ActionBarActivity {
                     try {
                         g.execute().get();
                         myJSON = g.getJSON();
+                        Local.list = myJSON;
                         personList.clear();
                         list.setAdapter(null);
                         showList();
@@ -93,6 +101,14 @@ public class ListActivity extends ActionBarActivity {
                 }
                 else{
                     Connection.NoConnectionToast(ListActivity.this);
+                    myJSON = Local.list;
+                    personList.clear();
+                    list.setAdapter(null);
+                    try {
+                        showList();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             @Override
@@ -186,6 +202,7 @@ public class ListActivity extends ActionBarActivity {
                         }
                         else{
                             Connection.NoConnectionToast(ListActivity.this);
+                            Local.WriteToFileForEdit("EDIT", oldName, oldPhone, newName, newPhone, newAddress);
                         }
                         break;
                 }
@@ -269,6 +286,7 @@ public class ListActivity extends ActionBarActivity {
                 }
                 else{
                     Connection.NoConnectionToast(ListActivity.this);
+                    Local.WriteToFile("DELETE", name, phone, address);
                 }
             }
         });
@@ -295,19 +313,35 @@ public class ListActivity extends ActionBarActivity {
     }
 
     public void getDataAndShowList() {
+
         GetDataJSON g = new GetDataJSON(this);
-        try {
-            g.execute().get();
-            myJSON = g.getJSON();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+
+        if (Connection.isNetworkAvailable(this)){
+            try {
+                g.execute().get();
+                myJSON = g.getJSON();
+                Local.SetList(myJSON);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+            try {
+                showList();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            try {
+                myJSON = Local.list;
+                showList();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
-        try {
-            showList();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+
+
     }
 
     private void showList() throws JSONException {

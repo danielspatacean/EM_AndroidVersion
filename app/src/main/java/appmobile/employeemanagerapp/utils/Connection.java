@@ -10,7 +10,7 @@ import android.widget.Toast;
  */
 
 public class Connection {
-    public static final String ServerURL = "ServerURL";
+    public static final String ServerURL = "http://emserver.000webhostapp.com/";
     public static final String InsertURL = ServerURL + "insert.php";
     public static final String EditURL = ServerURL + "edit.php";
     public static final String DeleteURL = ServerURL + "delete.php";

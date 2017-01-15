@@ -8,10 +8,20 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.AddEmployeeAsync;
 import appmobile.employeemanagerapp.utils.Connection;
 import appmobile.employeemanagerapp.utils.Constants;
+import appmobile.employeemanagerapp.utils.Local;
 import appmobile.employeemanagerapp.utils.Validator;
 
 public class AddPersonActivity extends ActionBarActivity {
@@ -20,6 +30,9 @@ public class AddPersonActivity extends ActionBarActivity {
     private EditText editTextPhone;
     private EditText editTExtAddress;
     private Validator validator;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +43,11 @@ public class AddPersonActivity extends ActionBarActivity {
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
         editTExtAddress = (EditText) findViewById(R.id.editTextAddress);
+
+        if (Connection.isNetworkAvailable(this)){
+            Local.UpdateFromFileForAdd(this);
+            Local.ClearFile();
+        }
     }
 
     public void insert(View view){
@@ -49,12 +67,14 @@ public class AddPersonActivity extends ActionBarActivity {
                     insertToDatabase(name, phone, address);
                 }
                 else{
+                    Local.WriteToFile("ADD", name, phone, address);
                     Connection.NoConnectionToast(AddPersonActivity.this);
                 }
                 break;
             default:
         }
     }
+
 
     public void insertToDatabase(String name, String phone, String address){
         AddEmployeeAsync sendPostReqAsyncTask = new AddEmployeeAsync(this);

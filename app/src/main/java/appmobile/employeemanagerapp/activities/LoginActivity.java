@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import appmobile.employeemanagerapp.R;
 import appmobile.employeemanagerapp.tasks.LoginAsync;
 import appmobile.employeemanagerapp.utils.AppState;
@@ -31,6 +36,7 @@ public class LoginActivity extends Activity {
             Intent intent = new Intent(LoginActivity.this, UserProfile.class);
             finish();
             startActivity(intent);
+
         }
         else {
             setContentView(R.layout.activity_login);
