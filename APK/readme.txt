@@ -1,6 +1,9 @@
 User: test
 password: test
 
+EM_1.3
+Include offline support + persistare de date local (in fisier).
+
 EM_V1.2
 Este functionabila si pe versiuni mai vechi de android (4)
 + call functionality
