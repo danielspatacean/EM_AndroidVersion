@@ -40,6 +40,7 @@ public class UserProfile extends ActionBarActivity {
         textViewDetails.setText(Constants.AppDetails);
 
         Local.Initialize(this);
+        overridePendingTransition(R.anim.activity_push_up_in, R.anim.activity_push_up_out);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event)  {

@@ -44,6 +44,7 @@ public class LoginActivity extends Activity {
             editTextPassword = (EditText) findViewById(R.id.editTextPassword);
             editTextUserName.setHint(Constants.username);
             editTextPassword.setHint(Constants.password);
+            overridePendingTransition(R.anim.activity_push_up_in, R.anim.activity_push_up_out);
         }
     }
     @Override

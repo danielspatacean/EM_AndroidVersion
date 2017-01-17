@@ -65,14 +65,17 @@ public class Local {
                     do {
                         line = buffreader.readLine();
                         System.out.println(line);
-                        String[] attributes = line.split(";");
-                        if (attributes[0].equals("DELETE")) {
-                            String name = attributes[1];
-                            String phone = attributes[2];
-                            String address = attributes[3];
-                            DeleteAsync sendPostReqAsyncTask = new DeleteAsync((ListActivity) activity);
-                            sendPostReqAsyncTask.execute(name, phone, address);
+                        if (line != null){
+                            String[] attributes = line.split(";");
+                            if (attributes[0].equals("DELETE")) {
+                                String name = attributes[1];
+                                String phone = attributes[2];
+                                String address = attributes[3];
+                                DeleteAsync sendPostReqAsyncTask = new DeleteAsync((ListActivity) activity);
+                                sendPostReqAsyncTask.execute(name, phone, address);
+                            }
                         }
+
                     } while (line != null);
                 }
             } catch (Exception ex) {
@@ -99,14 +102,17 @@ public class Local {
                 do {
                     line = buffreader.readLine();
                     System.out.println(line);
-                    String[] attributes = line.split(";");
-                    if (attributes[0].equals("ADD")) {
-                        String name = attributes[1];
-                        String phone = attributes[2];
-                        String address = attributes[3];
-                        AddEmployeeAsync sendPostReqAsyncTask = new AddEmployeeAsync((AddPersonActivity) activity);
-                        sendPostReqAsyncTask.execute(name, phone, address);
+                    if (line != null){
+                        String[] attributes = line.split(";");
+                        if (attributes[0].equals("ADD")) {
+                            String name = attributes[1];
+                            String phone = attributes[2];
+                            String address = attributes[3];
+                            AddEmployeeAsync sendPostReqAsyncTask = new AddEmployeeAsync((AddPersonActivity) activity);
+                            sendPostReqAsyncTask.execute(name, phone, address);
+                        }
                     }
+
                 } while (line != null);
             }
         } catch (Exception ex) {
@@ -133,15 +139,18 @@ public class Local {
                 do {
                     line = buffreader.readLine();
                     System.out.println(line);
-                    String[] attributes = line.split(";");
-                    if (attributes[0].equals("EDIT")) {
-                        String oldName = attributes[1];
-                        String oldPhone = attributes[2];
-                        String newName = attributes[3];
-                        String newPhone = attributes[4];
-                        String newAddress = attributes[4];
-                        EditAsync sendPostReqAsyncTask = new EditAsync((ListActivity) activity);
-                        sendPostReqAsyncTask.execute(oldName, oldPhone, newName, newPhone, newAddress);
+                    if (line != null) {
+                        String[] attributes = line.split(";");
+                        if (attributes[0].equals("EDIT")) {
+                            String oldName = attributes[1];
+                            String oldPhone = attributes[2];
+                            String newName = attributes[3];
+                            String newPhone = attributes[4];
+                            String newAddress = attributes[4];
+                            EditAsync sendPostReqAsyncTask = new EditAsync((ListActivity) activity);
+                            sendPostReqAsyncTask.execute(oldName, oldPhone, newName, newPhone, newAddress);
+                        }
+
                     }
                 } while (line != null);
             }

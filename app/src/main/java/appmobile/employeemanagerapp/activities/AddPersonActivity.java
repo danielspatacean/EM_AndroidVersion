@@ -111,5 +111,6 @@ public class AddPersonActivity extends ActionBarActivity {
     public void onBackPressed() {
         View view = findViewById(R.id.listView);
         goBackToUserPofile(view);
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
     }
 }
