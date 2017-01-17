@@ -1,6 +1,9 @@
 User: test
 password: test
 
+EM_1.4
+Include custom animations.
+
 EM_1.3
 Include offline support + persistare de date local (in fisier).
 
